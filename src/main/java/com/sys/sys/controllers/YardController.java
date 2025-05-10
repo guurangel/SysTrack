@@ -1,7 +1,5 @@
 package com.sys.sys.controllers;
 
-import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,18 +25,26 @@ import com.sys.sys.repository.YardRepository;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("yards")
 public class YardController {
-    
+
+    public record YardFilters(Integer maxCapacity) {
+    }
+
     @Autowired
     private YardRepository repository;
 
     @GetMapping
-    @Cacheable("yards")
-    public List<Yard> index() {
-        return repository.findAll();
+    public Page<Yard> index(
+            YardFilters filters,
+            @PageableDefault(size = 5, sort = "capacidadeTotal", direction = Direction.DESC) Pageable pageable) {
+
+        if (filters.maxCapacity() != null) {
+            return repository.findByCapacidadeTotalLessThanEqual(filters.maxCapacity(), pageable);
+        } else {
+            return repository.findAll(pageable);
+        }
     }
 
     @PostMapping
@@ -59,7 +65,7 @@ public class YardController {
         repository.delete(getYard(id));
         return ResponseEntity.noContent().build();
     }
-    
+
     @PutMapping("{id}")
     public ResponseEntity<Yard> update(@PathVariable Long id, @RequestBody @Valid Yard yard) {
         getYard(id);

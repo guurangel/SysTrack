@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sys.sys.model.Motorcycle;
+import com.sys.sys.model.MotorcycleStatus;
 import com.sys.sys.repository.MotorcycleRepository;
 import com.sys.sys.service.MotorcycleService;
+import com.sys.sys.specification.MotorcycleSpecification;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +34,19 @@ import jakarta.validation.Valid;
 @RequestMapping("motorcycles")
 public class MotorcycleController {
     
+    public record MotorcycleFilters(
+    String plate,
+    String brand,
+    String model,
+    MotorcycleStatus status,
+    Integer year,
+    Integer yearStart,
+    Integer yearEnd,
+    Double kmMin,
+    Double kmMax
+    ) {}
+
+
     @Autowired
     private MotorcycleService motorcycleService;
 
@@ -36,9 +54,12 @@ public class MotorcycleController {
     private MotorcycleRepository repository;
 
     @GetMapping
-    @Cacheable("motorcycles")
-    public List<Motorcycle> index() {
-        return repository.findAll();
+    public Page<Motorcycle> index(
+            MotorcycleFilters filters,
+            @PageableDefault(size = 5) Pageable pageable) {
+
+        var specification = MotorcycleSpecification.withFilters(filters);
+        return repository.findAll(specification, pageable);
     }
 
     @PostMapping
