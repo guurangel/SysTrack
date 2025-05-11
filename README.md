@@ -131,7 +131,6 @@ patio: Yard
 ```java
 id: Long
 nome: String
-endereco: String
 capacidadeTotal: Integer
 ```
 
