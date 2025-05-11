@@ -4,13 +4,13 @@
 
 ## 📌 Índice
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Como Executar](#como-executar)
-- [Endpoints da API](#endpoints-da-api)
-- [Funcionalidades](#funcionalidades)
-- [Modelo de Dados](#modelo-de-dados)
-- [Nossa equipe](#nossa-equipe)
+- [🧾 Sobre o Projeto](#-sobre-o-projeto)
+- [⚙️ Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [🧪 Como Executar](#-como-executar)
+- [📌 Endpoints da API](#-endpoints-da-api)
+- [✅ Funcionalidades](#-funcionalidades)
+- [🗃️ Modelo de Dados](#-modelo-de-dados)
+- [👨‍💻 Nossa equipe](#-nossa-equipe)
 
 ---
 
