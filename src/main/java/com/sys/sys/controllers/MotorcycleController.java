@@ -1,10 +1,7 @@
 package com.sys.sys.controllers;
 
-import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -26,7 +23,6 @@ import com.sys.sys.model.MotorcycleStatus;
 import com.sys.sys.repository.MotorcycleRepository;
 import com.sys.sys.service.MotorcycleService;
 import com.sys.sys.specification.MotorcycleSpecification;
-
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import jakarta.validation.Valid;
@@ -41,12 +37,12 @@ public class MotorcycleController {
     String brand,
     String model,
     MotorcycleStatus status,
-    Integer year,
-    Integer yearStart,
-    Integer yearEnd,
+    Integer modelYear,
+    Integer modelYearStart,
+    Integer modelYearEnd,
     Double kmMin,
     Double kmMax,
-    Long patioId
+    Long yardId
     ) {}
 
 
@@ -81,7 +77,7 @@ public class MotorcycleController {
                         "plate": "XYZ1234",
                         "brand": "Honda",
                         "model": "CG 160",
-                        "year": 2021,
+                        "model_year": 2021,
                         "km": 8500.0,
                         "status": "Manutenção",
                         "yard": {
@@ -93,7 +89,6 @@ public class MotorcycleController {
         )
     )
     public Motorcycle create(@RequestBody @Valid Motorcycle motorcycle) {
-        System.out.println("Cadastrando moto: " + motorcycle.getMarca());
         return motorcycleService.saveMotorcycle(motorcycle);
     }
 
@@ -121,7 +116,7 @@ public class MotorcycleController {
                         "plate": "XYZ1234",
                         "brand": "Honda",
                         "model": "CG 160",
-                        "year": 2021,
+                        "model_year": 2021,
                         "km": 8500.0,
                         "status": "Manutenção",
                         "yard": {
@@ -132,11 +127,10 @@ public class MotorcycleController {
             )
         )
     )
-    public ResponseEntity<Motorcycle> update(@PathVariable Long id, @RequestBody @Valid Motorcycle motorcycle) {
-        getMotorcycle(id);
-        motorcycle.setId(id);
-        return ResponseEntity.ok(motorcycleService.saveMotorcycle(motorcycle));
-    }
+    public ResponseEntity<Motorcycle> updateMotorcycle(@PathVariable Long id, @RequestBody Motorcycle moto) {
+        Motorcycle updated = motorcycleService.updateMotorcycle(id, moto);
+        return ResponseEntity.ok(updated);
+}
 
     private Motorcycle getMotorcycle(Long id) {
         return repository.findById(id).orElseThrow(

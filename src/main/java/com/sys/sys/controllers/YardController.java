@@ -40,10 +40,10 @@ public class YardController {
     @GetMapping
     public Page<Yard> index(
             YardFilters filters,
-            @PageableDefault(size = 5, sort = "capacidadeTotal", direction = Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 5, sort = "maxCapacity", direction = Direction.DESC) Pageable pageable) {
 
         if (filters.maxCapacity() != null) {
-            return repository.findByCapacidadeTotalLessThanEqual(filters.maxCapacity(), pageable);
+            return repository.findByMaxCapacityLessThanEqual(filters.maxCapacity(), pageable);
         } else {
             return repository.findAll(pageable);
         }

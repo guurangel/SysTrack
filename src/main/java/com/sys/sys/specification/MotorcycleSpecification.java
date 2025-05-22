@@ -15,19 +15,19 @@ public class MotorcycleSpecification {
 
             if (filters.plate() != null && !filters.plate().isBlank()) {
                 predicates.add(
-                        cb.like(cb.lower(root.get("placa")), "%" + filters.plate().toLowerCase() + "%")
+                    cb.like(cb.lower(root.get("plate")), "%" + filters.plate().toLowerCase() + "%")
                 );
             }
 
             if (filters.brand() != null && !filters.brand().isBlank()) {
                 predicates.add(
-                        cb.like(cb.lower(root.get("marca")), "%" + filters.brand().toLowerCase() + "%")
+                    cb.like(cb.lower(root.get("brand")), "%" + filters.brand().toLowerCase() + "%")
                 );
             }
 
             if (filters.model() != null && !filters.model().isBlank()) {
                 predicates.add(
-                        cb.like(cb.lower(root.get("modelo")), "%" + filters.model().toLowerCase() + "%")
+                    cb.like(cb.lower(root.get("model")), "%" + filters.model().toLowerCase() + "%")
                 );
             }
 
@@ -35,16 +35,16 @@ public class MotorcycleSpecification {
                 predicates.add(cb.equal(root.get("status"), filters.status()));
             }
 
-            if (filters.year() != null) {
-                predicates.add(cb.equal(root.get("ano"), filters.year()));
+            if (filters.modelYear() != null) {
+                predicates.add(cb.equal(root.get("model_year"), filters.modelYear()));
             }
 
-            if (filters.yearStart() != null && filters.yearEnd() != null) {
-                predicates.add(cb.between(root.get("ano"), filters.yearStart(), filters.yearEnd()));
-            } else if (filters.yearStart() != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("ano"), filters.yearStart()));
-            } else if (filters.yearEnd() != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("ano"), filters.yearEnd()));
+            if (filters.modelYearStart() != null && filters.modelYearEnd() != null) {
+                predicates.add(cb.between(root.get("model_year"), filters.modelYearStart(), filters.modelYearEnd()));
+            } else if (filters.modelYearStart() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("model_year"), filters.modelYearStart()));
+            } else if (filters.modelYearEnd() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("model_year"), filters.modelYearEnd()));
             }
 
             if (filters.kmMin() != null && filters.kmMax() != null) {
@@ -55,8 +55,8 @@ public class MotorcycleSpecification {
                 predicates.add(cb.lessThanOrEqualTo(root.get("km"), filters.kmMax()));
             }
 
-            if (filters.patioId() != null) {
-                predicates.add(cb.equal(root.get("patio").get("id"), filters.patioId()));
+            if (filters.yardId() != null) {
+                predicates.add(cb.equal(root.get("yard").get("id"), filters.yardId()));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

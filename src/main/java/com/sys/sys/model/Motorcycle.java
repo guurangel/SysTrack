@@ -1,9 +1,6 @@
 package com.sys.sys.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -38,36 +34,29 @@ public class Motorcycle {
         regexp = "^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$",
         message = "Placa deve seguir o padrão brasileiro (ABC1234) ou Mercosul (ABC1D23)."
     )
-    @JsonProperty("plate")
     @Column(unique = true)
-    private String placa;
+    private String plate;
 
     @NotBlank(message = "Marca não pode estar em branco.")
-    @JsonProperty("brand")
-    private String marca;
+    private String brand;
 
     @NotBlank(message = "Modelo não pode estar em branco.")
-    @JsonProperty("model")
-    private String modelo;
+    private String model;
 
     @NotNull(message = "Ano não pode estar em branco.")
-    @JsonProperty("year")
-    private Integer ano;
+    private Integer model_year;
 
     @NotNull(message = "Status não pode estar em branco.")
     @Enumerated(EnumType.STRING)
-    @JsonProperty("status")
     private MotorcycleStatus status;
 
     @NotNull(message = "Quilometragem não pode ser nula.")
     @PositiveOrZero(message = "Quilometragem não pode ser negativa.")
-    @JsonProperty("km")
     private Double km;
 
     @ManyToOne
     @NotNull(message = "Tem que ter um pátio associado.")
-    @JsonProperty("yard")
     @JsonBackReference
-    private Yard patio;
+    private Yard yard;
 
 }

@@ -29,9 +29,9 @@ public class DatabaseSeeder {
     @PostConstruct
     public void init() {
         var yards = List.of(
-            Yard.builder().name("Pátio Central").capacidadeTotal(50).adress("Av. Paulista, 2200").build(),
-            Yard.builder().name("Pátio Norte").capacidadeTotal(50).adress("Av. Marginal Tiête, 300").build(),
-            Yard.builder().name("Pátio Sul").capacidadeTotal(50).adress("Av. Ataliba Leonel, 782").build()
+            Yard.builder().name("Pátio Central").maxCapacity(150).adress("Rua da Consolação, 1900").build(),
+            Yard.builder().name("Pátio Norte").maxCapacity(50).adress("Av. Marginal Tiête, 300").build(),
+            Yard.builder().name("Pátio Sul").maxCapacity(70).adress("Av. Ataliba Leonel, 782").build()
         );
 
         var savedYards = yardRepository.saveAll(yards);
@@ -46,13 +46,13 @@ public class DatabaseSeeder {
         for (Yard yard : savedYards) {
             for (int i = 0; i < 30; i++) {
                 motos.add(Motorcycle.builder()
-                    .placa(generateRandomPlate(random))
-                    .marca(brands.get(random.nextInt(brands.size())))
-                    .modelo(models.get(random.nextInt(models.size())))
-                    .ano(2010 + random.nextInt(15))
+                    .plate(generateRandomPlate(random))
+                    .brand(brands.get(random.nextInt(brands.size())))
+                    .model(models.get(random.nextInt(models.size())))
+                    .model_year(2000 + random.nextInt(25))
                     .status(statusList.get(random.nextInt(statusList.size())))
                     .km(random.nextDouble() * 50000)
-                    .patio(yard)
+                    .yard(yard)
                     .build());
             }
         }

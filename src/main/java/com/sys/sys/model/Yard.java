@@ -3,10 +3,7 @@ package com.sys.sys.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,11 +34,10 @@ public class Yard {
     private String adress;
 
     @NotNull(message = "Capacidade total não pode estar em branco.")
-    @JsonProperty("maxCapacity")
     @Positive(message = "Capacidade total não pode ser negativa ou zero.")
-    private Integer capacidadeTotal;
+    private Integer maxCapacity;
 
-    @OneToMany(mappedBy = "patio")
+    @OneToMany(mappedBy = "yard")
     @JsonManagedReference
     private List<Motorcycle> motorcycles;
 }

@@ -8,7 +8,7 @@ import com.sys.sys.model.Yard;
 
 public interface MotorcycleRepository extends JpaRepository<Motorcycle, Long>, JpaSpecificationExecutor<Motorcycle> {
 
-    long countByPatio(Yard patio);
-    boolean existsByPlaca(String placa);
+    long countByYard(Yard yard);
+    boolean existsByPlate(String plate);
 
 }
