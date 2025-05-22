@@ -25,7 +25,6 @@ public class MotorcycleSpecification {
                 );
             }
 
-            
             if (filters.model() != null && !filters.model().isBlank()) {
                 predicates.add(
                         cb.like(cb.lower(root.get("modelo")), "%" + filters.model().toLowerCase() + "%")
@@ -33,36 +32,31 @@ public class MotorcycleSpecification {
             }
 
             if (filters.status() != null) {
-                predicates.add(
-                        cb.equal(root.get("status"), filters.status())
-                );
+                predicates.add(cb.equal(root.get("status"), filters.status()));
             }
 
             if (filters.year() != null) {
-                predicates.add(
-                cb.equal(root.get("ano"), filters.year())
-            );
-}
+                predicates.add(cb.equal(root.get("ano"), filters.year()));
+            }
 
             if (filters.yearStart() != null && filters.yearEnd() != null) {
-                predicates.add(
-                        cb.between(root.get("ano"), filters.yearStart(), filters.yearEnd())
-                );
+                predicates.add(cb.between(root.get("ano"), filters.yearStart(), filters.yearEnd()));
             } else if (filters.yearStart() != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("ano"), filters.yearStart()));
             } else if (filters.yearEnd() != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("ano"), filters.yearEnd()));
             }
 
-            // Filtro por km (intervalo)
             if (filters.kmMin() != null && filters.kmMax() != null) {
-                predicates.add(
-                        cb.between(root.get("km"), filters.kmMin(), filters.kmMax())
-                );
+                predicates.add(cb.between(root.get("km"), filters.kmMin(), filters.kmMax()));
             } else if (filters.kmMin() != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("km"), filters.kmMin()));
             } else if (filters.kmMax() != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("km"), filters.kmMax()));
+            }
+
+            if (filters.patioId() != null) {
+                predicates.add(cb.equal(root.get("patio").get("id"), filters.patioId()));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

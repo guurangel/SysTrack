@@ -18,6 +18,10 @@ public class MotorcycleService {
     private YardRepository yardRepository;
 
     public Motorcycle saveMotorcycle(Motorcycle motorcycle) {
+        if (motorcycleRepository.existsByPlaca(motorcycle.getPlaca())) {
+            throw new IllegalArgumentException("Já existe uma moto cadastrada com essa placa.");
+        }
+
         Yard yard = motorcycle.getPatio();
 
         if (yard != null) {
@@ -29,6 +33,8 @@ public class MotorcycleService {
             if (totalMotosNoPatio >= persistedYard.getCapacidadeTotal()) {
                 throw new IllegalStateException("O pátio está cheio. Capacidade máxima atingida.");
             }
+
+            motorcycle.setPatio(persistedYard);
         }
 
         return motorcycleRepository.save(motorcycle);

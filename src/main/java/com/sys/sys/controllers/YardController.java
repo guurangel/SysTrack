@@ -23,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.sys.sys.model.Yard;
 import com.sys.sys.repository.YardRepository;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import jakarta.validation.Valid;
 
 @RestController
@@ -50,6 +52,23 @@ public class YardController {
     @PostMapping
     @CacheEvict(value = "yards", allEntries = true)
     @ResponseStatus(code = HttpStatus.CREATED)
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "Dados esperados para cadastrar um pátio.",
+        content = @Content(
+            mediaType = "application/json",
+            examples = @ExampleObject(
+                name = "Exemplo de pátio",
+                summary = "Exemplo de pátio.",
+                value = """
+                    {   
+                        "name": "Filial Paulista",
+                        "maxCapacity": 1,
+                        "adress": "Av. Paulista, 2200"
+                    }
+                """
+            )
+        )
+    )
     public Yard create(@RequestBody @Valid Yard yards) {
         System.out.println("Cadastrando pátio: " + yards.getName());
         return repository.save(yards);
@@ -67,6 +86,23 @@ public class YardController {
     }
 
     @PutMapping("{id}")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "Dados esperados para alterar informações um pátio.",
+        content = @Content(
+            mediaType = "application/json",
+            examples = @ExampleObject(
+                name = "Exemplo de pátio",
+                summary = "Dados alterados: capacidade máxima(era 1 virou 10).",
+                value = """
+                    {   
+                        "name": "Filial Paulista",
+                        "maxCapacity": 10,
+                        "adress": "Av. Paulista, 2200"
+                    }
+                """
+            )
+        )
+    )
     public ResponseEntity<Yard> update(@PathVariable Long id, @RequestBody @Valid Yard yard) {
         getYard(id);
         yard.setId(id);

@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
 @OpenAPIDefinition(
-		info = @Info(title = "SysTrack API", version = "v1", description = "API do SaaS SysTrack")
+		info = @Info(title = "SysTrack API", version = "v1", description = "API do SaaS SysTrack, que tem como objetivo o rastreio preciso das motocicletas cadastradas.")
 )
 @EnableCaching
 public class App {

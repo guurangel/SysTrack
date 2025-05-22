@@ -27,6 +27,8 @@ import com.sys.sys.repository.MotorcycleRepository;
 import com.sys.sys.service.MotorcycleService;
 import com.sys.sys.specification.MotorcycleSpecification;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import jakarta.validation.Valid;
 
 
@@ -43,7 +45,8 @@ public class MotorcycleController {
     Integer yearStart,
     Integer yearEnd,
     Double kmMin,
-    Double kmMax
+    Double kmMax,
+    Long patioId
     ) {}
 
 
@@ -54,6 +57,7 @@ public class MotorcycleController {
     private MotorcycleRepository repository;
 
     @GetMapping
+    
     public Page<Motorcycle> index(
             MotorcycleFilters filters,
             @PageableDefault(size = 5) Pageable pageable) {
@@ -65,6 +69,29 @@ public class MotorcycleController {
     @PostMapping
     @CacheEvict(value = "motorcycles", allEntries = true)
     @ResponseStatus(code = HttpStatus.CREATED)
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "Dados esperados para cadastrar uma motocicleta.",
+        content = @Content(
+            mediaType = "application/json",
+            examples = @ExampleObject(
+                name = "Exemplo de motocicleta",
+                summary = "Exemplo de uma moto Honda CG 160",
+                value = """
+                    {
+                        "plate": "XYZ1234",
+                        "brand": "Honda",
+                        "model": "CG 160",
+                        "year": 2021,
+                        "km": 8500.0,
+                        "status": "Manutenção",
+                        "yard": {
+                            "id": 3
+                        }
+                    }
+                """
+            )
+        )
+    )
     public Motorcycle create(@RequestBody @Valid Motorcycle motorcycle) {
         System.out.println("Cadastrando moto: " + motorcycle.getMarca());
         return motorcycleService.saveMotorcycle(motorcycle);
@@ -82,6 +109,29 @@ public class MotorcycleController {
     }
     
      @PutMapping("{id}")
+     @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "Dados esperados para alterar os dados de uma motocicleta.",
+        content = @Content(
+            mediaType = "application/json",
+            examples = @ExampleObject(
+                name = "Exemplo de motocicleta",
+                summary = "Dados alterados: alteração do pátio da motocicleta (era 3 virou 2)",
+                value = """
+                    {
+                        "plate": "XYZ1234",
+                        "brand": "Honda",
+                        "model": "CG 160",
+                        "year": 2021,
+                        "km": 8500.0,
+                        "status": "Manutenção",
+                        "yard": {
+                            "id": 2
+                        }
+                    }
+                """
+            )
+        )
+    )
     public ResponseEntity<Motorcycle> update(@PathVariable Long id, @RequestBody @Valid Motorcycle motorcycle) {
         getMotorcycle(id);
         motorcycle.setId(id);

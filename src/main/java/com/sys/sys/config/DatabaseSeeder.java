@@ -28,11 +28,10 @@ public class DatabaseSeeder {
 
     @PostConstruct
     public void init() {
-        // Criação dos pátios
         var yards = List.of(
-            Yard.builder().name("Pátio Central").capacidadeTotal(50).build(),
-            Yard.builder().name("Pátio Norte").capacidadeTotal(50).build(),
-            Yard.builder().name("Pátio Sul").capacidadeTotal(50).build()
+            Yard.builder().name("Pátio Central").capacidadeTotal(50).adress("Av. Paulista, 2200").build(),
+            Yard.builder().name("Pátio Norte").capacidadeTotal(50).adress("Av. Marginal Tiête, 300").build(),
+            Yard.builder().name("Pátio Sul").capacidadeTotal(50).adress("Av. Ataliba Leonel, 782").build()
         );
 
         var savedYards = yardRepository.saveAll(yards);
