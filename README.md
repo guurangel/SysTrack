@@ -84,6 +84,7 @@ Acesse o Swagger para testar os endpoints:
 - `year` — ano exato
 - `yearStart` e `yearEnd` — intervalo de ano
 - `kmMin` e `kmMax` — intervalo de quilometragem
+- `patioId` — filtrar por pátio associado
 
 ---
 
@@ -121,7 +122,7 @@ placa: String
 marca: String
 modelo: String
 ano: Integer
-status: Funcio | Manutenção
+status: Funcional | Manutenção
 km: Double
 patio: Yard
 ```
@@ -130,7 +131,8 @@ patio: Yard
 
 ```java
 id: Long
-nome: String
+name: String
+endereco: String
 capacidadeTotal: Integer
 ```
 
