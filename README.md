@@ -81,10 +81,10 @@ Acesse o Swagger para testar os endpoints:
 - `brand` — marca
 - `model` — modelo
 - `status` — status da moto (`Funcional` ou `Manutenção`)
-- `year` — ano exato
-- `yearStart` e `yearEnd` — intervalo de ano
+- `modelYear` — ano exato
+- `modelYearStart` e `modelYearEnd` — intervalo de ano
 - `kmMin` e `kmMax` — intervalo de quilometragem
-- `patioId` — filtrar por pátio associado
+- `yardId` — filtrar por pátio associado
 
 ---
 
@@ -118,13 +118,13 @@ Acesse o Swagger para testar os endpoints:
 
 ```java
 id: Long
-placa: String
-marca: String
-modelo: String
-ano: Integer
+plate: String
+brand: String
+model: String
+model_year: Integer
 status: Funcional | Manutenção
 km: Double
-patio: Yard
+yard: Yard
 ```
 
 ### Yard
@@ -132,8 +132,8 @@ patio: Yard
 ```java
 id: Long
 name: String
-endereco: String
-capacidadeTotal: Integer
+adress: String
+maxCapacity: Integer
 ```
 
 ---
